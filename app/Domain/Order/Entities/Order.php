@@ -24,6 +24,11 @@ class Order
         $this->items[] = $price;
     }
 
+    public function id(): int
+    {
+        return $this->id;
+    }
+
     public function customerId(): int
     {
         return $this->customerId;
@@ -36,8 +41,6 @@ class Order
         }
 
         $this->confirmed = true;
-
-        event(new OrderConfirmed($this->id));
     }
 
     public function total(): Money

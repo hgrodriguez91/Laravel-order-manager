@@ -4,6 +4,7 @@ namespace App\Application\Order\UseCases;
 
 use App\Application\Order\DTOs\CreateOrderDTO;
 use App\Domain\Order\Entities\Order;
+use App\Domain\Order\Events\OrderConfirmed;
 use App\Domain\Order\Repositories\OrderRepository;
 use App\Domain\Order\ValueObjects\Money;
 
@@ -22,6 +23,8 @@ class CreateOrderUseCase
         $order->confirm();
 
         $this->orders->save($order);
+
+        event(new OrderConfirmed($order->id()));
 
         return $order;
     }
